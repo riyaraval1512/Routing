@@ -1,0 +1,46 @@
+<br/><br/><br/>
+<!-- <app-product-details (productDetails)="getproductdetails($event);"></app-product-details> -->
+<button (click)="addProductRouter()" class="btn btn-success">Add Product</button>
+&nbsp;&nbsp;<span class="col-md-10">PRODUCT DETAILS</span>&nbsp;&nbsp;
+<button (click)="showCart()" class="btn btn-success">Show Cart</button>
+<br/>
+<br/>
+<table id="Product" class="table">
+    <thead>
+        <th>ID</th>
+        <th>TITLE</th>
+        <th>PRICE</th>
+        <th>STOCK</th>
+        <th></th>
+         <th>Totle Cost</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Add To Cart</th>
+    </thead>
+    <tr *ngFor="let products of productDetails" >
+        <td>{{products.product_id}}</td>
+        <td>{{products.title}}</td>
+        <td>{{products.price}}</td>
+        <td>{{products.stock}}</td>
+         <td>
+             
+            <app-stock-update [stock]=products.stock [productDetail]="products" [component]="'productcomponent'" (updateStock)="updateProductStock();"></app-stock-update>
+        </td> 
+        <td>{{products.price*products.stock}}</td>
+        <td><nav><button (click)="editproductRoute(products.product_id)" class="btn btn-primary">Edit</button></nav></td>
+        <td><nav><button (click)="deleteRoute(products.product_id)" class="btn btn-secondary" >Delete</button></nav></td>
+        <td><nav><button (click)="addToCart(products.product_id)" class="btn btn-info" >Add To Cart</button></nav></td>
+    </tr>
+    <thead>
+        <th></th>
+        <th>Total</th>
+        <th>{{Totleprice}}</th>
+        <th>{{Totlestock}}</th>
+        <th></th>
+        <th>{{Totleprice*Totlestock}}</th>
+        <th></th>
+        <th></th>
+    </thead>
+       
+</table>
+

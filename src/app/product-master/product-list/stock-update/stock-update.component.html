@@ -1,0 +1,9 @@
+<ng-container *ngIf="component=='productcomponent'">
+<input type="number"  [(ngModel)]="productDetail.stock" #prdtcom='ngModel' (input)="updateProductStock()"><br/>
+<span [ngStyle]="{'background-color': divColor}" class="text-body font-weight-bolder" style="font-size: large;"> {{colortag}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<span [appGrade]="productDetail.stock" class="text-body font-weight-bolder" class="text-body font-weight-bolder" style="font-size: large;"></span>
+</ng-container>
+
+<ng-container *ngIf="component=='cartcomponent'">
+<input type="number"  [(ngModel)]="productDetail.quantity" #stkcom='ngModel'><br/>
+</ng-container>

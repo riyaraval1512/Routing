@@ -1,0 +1,47 @@
+<br/>
+<br/>
+<form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="row">
+
+            <input type="text" formControlName="title" class="form-control col-md-8" placeholder="Title">
+            <div
+                *ngIf="addProductForm.controls['title'].invalid && (addProductForm.controls['title'].touched || addProductForm.controls['title'].dirty)">
+                <div *ngIf="addProductForm.controls['title'].errors.required" class="alert alert-danger">
+                    Title is required
+                </div>
+            </div>
+                <input type="number" formControlName="price" class="form-control col-md-8" placeholder="Price"
+                    onkeypress="return event.charCode >= 48">
+            <div *ngIf="addProductForm.controls['price'].invalid && (addProductForm.controls['price'].touched || addProductForm.controls['price'].dirty)">
+                <div *ngIf="addProductForm.controls['price'].errors.required" class="alert alert-danger">
+                    price is required
+                </div>
+                <div *ngIf="addProductForm.controls['price'].errors.min" class="alert alert-danger">
+                    minimum price value must be one
+                </div>
+            </div>
+            <input type="number" formControlName="stock" placeholder="Stock" class="form-control col-md-8"
+                onkeypress="return event.charCode >= 48">
+            <div
+                *ngIf="addProductForm.controls['stock'].invalid && (addProductForm.controls['stock'].touched || addProductForm.controls['stock'].dirty)">
+                <div *ngIf="addProductForm.controls['stock'].errors.required" class="alert alert-danger">
+                    stock is required
+                </div>
+                <div *ngIf="addProductForm.controls['stock'].errors.min" class="alert alert-danger">
+                    minimum stock value must be one
+                </div>
+            </div>
+        </div>
+        <br/>
+            <div class="row">
+            
+            <div class="col-md-8">
+                <button type="submit" class="btn btn-primary form-control col-md-2">Submit</button>
+                <button type="reset" class="btn btn-secondary form-control col-md-2" (click)="onReset();">Cancel</button>
+        </div>
+    </div>
+        
+    </div>
+
+</form>

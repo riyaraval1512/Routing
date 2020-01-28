@@ -1,0 +1,28 @@
+<ng-container *ngIf="length==0; else elseTemplate">
+    <h1>Nothing in Cart</h1>
+</ng-container>
+<ng-template #elseTemplate>
+    <table id="Product" class="table">
+        <thead>
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>PRICE</th>
+            <th>STOCK</th>
+            <th></th>
+            <th>Totle Cost</th>
+            <th>Delete</th>
+        </thead>
+        <tr *ngFor="let cart of cartProductArray" >
+            <td>{{cart.product_id}}</td>
+            <td>{{cart.title}}</td>
+            <td>{{cart.price}}</td>
+            <td>{{cart.stock}}</td>
+            <td>            
+                <app-stock-update [stock]='cart.stock' [productDetail]="cart" [component]="'cartcomponent'"></app-stock-update>
+            </td>
+            
+            <td>{{cart.price*cart.quantity}}</td>
+            <td><button (click)="deleteFromCart(cart.product_id)" >Delete from Cart</button></td>
+        </tr>
+    </table>
+</ng-template>

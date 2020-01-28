@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <h1>Sign In Form</h1>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="SubmitData()">
+        <!-- USERNAME -->
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name">
+        </div>
+        <div *ngIf="Name.invalid && Name.touched" class="alert-danger">
+            <div *ngIf="Name.errors?.minlength" class="alert-danger">name has atleast 4 char
+                long</div>
+            <div *ngIf="Name.errors?.required" class="alert-danger">Name required</div>
+        </div>
+        <!-- PASSWORD -->
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" formControlName="password">
+        </div>
+        <div *ngIf="Password.invalid && Password.touched" class="alert-danger">
+            <div *ngIf="Password.errors?.required" class="alert-danger">Password required</div>
+        </div>
+        <div class="alert-danger">{{err_msg}}</div>
+        <button class="btn btn-primary" type="submit" [disabled]="registrationForm.invalid">Signin</button>
+        &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-primary" type="reset" routerLink='/home' RouterLinkActive='active'>Cancle</button>
+    </form>
+</div>
