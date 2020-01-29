@@ -3,20 +3,26 @@ import { IProductDetails } from 'src/app/models/users.model'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductListService } from 'src/app/services/product-list.service';
 import { CartService } from 'src/app/services/cart.service';
+import { FilterPipe } from 'src/app/pipes/filter.pipe';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
+
 export class ProductListComponent implements OnInit {
 
   public productDetails: IProductDetails[];
   public temp: IProductDetails;
   Totleprice: number = 0;
   Totlestock: number = 0;
-  cartProductArray: IProductDetails[]
+  cartProductArray: IProductDetails[];
+  ttlsearch:string="";
+  idsearch:string="";
+  search:string="";
 
-  constructor(private route: ActivatedRoute, private router: Router, private _cartproduct: CartService, private _productListService: ProductListService) { }
+  constructor(private route: ActivatedRoute,private fp:FilterPipe, private router: Router, private _cartproduct: CartService, private _productListService: ProductListService) { }
 
   ngOnInit() {
     this.productDetails = this._productListService.productDetails;
@@ -51,8 +57,23 @@ export class ProductListComponent implements OnInit {
   }
 
   showCart(){
-    this.router.navigateByUrl('/products/addtocart');
-    
+    this.router.navigateByUrl('/products/addtocart');  
+  }
+
+  getsearchdata(data){
+    if(data){
+    if(data==this.search){
+    this.productDetails=this.fp.transform(this.productDetails,['product_id','title'], this.search);
+    }  
+    else if(data==this.ttlsearch){
+      this.productDetails=this.fp.transform(this.productDetails,['title'], this.ttlsearch);
+    }
+    else if(data==this.idsearch){
+      this.productDetails=this.fp.transform(this.productDetails,['product_id'], this.idsearch);
+    }}
+    else{
+      this.productDetails=this._productListService.productDetails;
+    }
   }
 
   addProductRouter() {

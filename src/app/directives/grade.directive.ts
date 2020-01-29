@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, HostBinding, SimpleChanges, Renderer } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, HostBinding, SimpleChanges} from '@angular/core';
 
 @Directive({
   selector: '[appGrade]'

@@ -7,7 +7,10 @@ import { DeleteProductComponent } from './delete-product/delete-product.componen
 import { ProductListComponent } from './product-list.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AddProductToCartComponent } from './add-product-to-cart/add-product-to-cart.component';
-import { GradeDirective } from 'src/app/directives/grade.directive';
+import { DirectivesModule } from 'src/app/directives/directives.module';
+import { PipeModule } from 'src/app/pipes/pipe.module';
+import { FilterPipe } from 'src/app/pipes/filter.pipe';
+
 
 const routes: Routes = [
   { 
@@ -44,13 +47,14 @@ const routes: Routes = [
     StockUpdateComponent,
     DeleteProductComponent,
     AddProductToCartComponent,
-    GradeDirective
+    FilterPipe
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DirectivesModule
   ],
   exports:[
     RouterModule
