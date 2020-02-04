@@ -7,7 +7,8 @@ import { HomeComponent } from './home/home.component';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms'
 import { SigninSignupFormComponent } from './authentication/signin-signup-form/signin-signup-form.component';
 import { SigninSignupFormModule } from './authentication/signin-signup-form/signin-signup-form.module';
-
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { SigninSignupFormModule } from './authentication/signin-signup-form/sign
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SigninSignupFormModule
+    SigninSignupFormModule,
+    HttpClientModule,
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

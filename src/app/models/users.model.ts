@@ -5,7 +5,7 @@ export interface Iuserdata{
 }
 
 export interface IProductDetails{
-    product_id:number,
+    id:number,
     title:string,
     price:number,
     stock:number,

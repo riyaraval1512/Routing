@@ -13,7 +13,7 @@ import { FilterPipe } from 'src/app/pipes/filter.pipe';
 
 export class ProductListComponent implements OnInit {
 
-  public productDetails: IProductDetails[];
+  public productDetails: IProductDetails[]=[];
   public temp: IProductDetails;
   Totleprice: number = 0;
   Totlestock: number = 0;
@@ -21,39 +21,57 @@ export class ProductListComponent implements OnInit {
   ttlsearch:string="";
   idsearch:string="";
   search:string="";
+  selecteditem;
 
   constructor(private route: ActivatedRoute,private fp:FilterPipe, private router: Router, private _cartproduct: CartService, private _productListService: ProductListService) { }
 
   ngOnInit() {
-    this.productDetails = this._productListService.productDetails;
+    this._productListService.getProductsdata().subscribe((data)=>{
+      this.productDetails=data;
+      console.log(this.productDetails);
+    },
+      (err) => console.log(err),
+      () => {
+        this.TOTAL();
+      });
     this.cartProductArray = this._cartproduct.cartProduct;
-    this.updateProductStock();
+    
   }
 
-  updateProductStock() {
+  TOTAL() {
+    console.log(this.productDetails);
     this.Totleprice = this.productDetails.reduce((total, product) => {
       return total += product.price;
     }, 0);
+    console.log(this.Totleprice);
     this.Totlestock = this.productDetails.reduce(function (acc: number, product: IProductDetails) {
       return acc += product.stock;
     }, 0);
+    console.log(this.Totlestock);
   }
 
   deleteRoute(id) {
-    let selecteditem = this.productDetails.find(item => item.product_id === id);
-    this.productDetails.splice(this.productDetails.indexOf(selecteditem), 1);
-    this.updateProductStock();
+    this._productListService.deleteProductdata(id).subscribe(d=>{
+      console.log(this.productDetails)
+    },
+    (err)=>console.log(err),
+    ()=>this.TOTAL());
   }
 
   addToCart(id) {
-    if( this.cartProductArray.find(item => item.product_id === id)){
+    if( this.cartProductArray.find(item => item.id === id)){
       alert('already in cart');
     }
     else{
-      let selecteditem = this.productDetails.find(item => item.product_id === id);
-      selecteditem.quantity=1;
-      this.cartProductArray.push(selecteditem);
-    }
+      this._productListService.getProductdata(id).subscribe(data=>{
+        this.selecteditem=data;
+      },
+      (err)=>console.log(err),
+      ()=>{
+        this.selecteditem.quantity=1;
+        this.cartProductArray.push(this.selecteditem);
+      })
+      }
   }
 
   showCart(){
@@ -72,7 +90,7 @@ export class ProductListComponent implements OnInit {
       this.productDetails=this.fp.transform(this.productDetails,['product_id'], this.idsearch);
     }}
     else{
-      this.productDetails=this._productListService.productDetails;
+      this._productListService.getProductsdata().subscribe(data=>this.productDetails=data);
     }
   }
 

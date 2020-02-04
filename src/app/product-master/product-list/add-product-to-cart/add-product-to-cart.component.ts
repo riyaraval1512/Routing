@@ -14,20 +14,20 @@ export class AddProductToCartComponent implements OnInit {
   constructor(private _productListService: ProductListService, private router:ActivatedRoute,private _cartproduct:CartService) { }
 
 
-  productDetails:IProductDetails[];
+  productDetails:IProductDetails[]=[];
   id:number;
   temp:IProductDetails;
   cartProductArray;
   length:number
 
   ngOnInit() {
-    this.productDetails = this._productListService.productDetails;
+    this._productListService.getProductsdata().subscribe(data=>this.productDetails=data);
     this.cartProductArray=this._cartproduct.cartProduct;
     this.length=this.cartProductArray.length;
     console.log(this.cartProductArray);
   }
   deleteFromCart(id){
-    this.temp=this.cartProductArray.find(item=>item.product_id==id);
+    this.temp=this.cartProductArray.find(item=>item.id==id);
     this.cartProductArray.splice(this.cartProductArray.indexOf(this.temp),1);
   }
 

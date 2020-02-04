@@ -19,11 +19,9 @@ const routes: Routes = [
     path:'products', 
     loadChildren: () => import('./product-master/product-list/product-list-routing.module').then(m => m.ProductListRoutingModule)
   },
-  // {path:'signin', component:SigninFormComponent},
-  // {path:'signup', component:SignupFormComponent},
   { 
     path: '', 
-    redirectTo: '/home', 
+    redirectTo: '/signinsignup/signin', 
     pathMatch: 'full' 
   }
 ];

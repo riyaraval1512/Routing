@@ -17,26 +17,30 @@ export class AddProductComponent implements OnInit {
 
   hiddenForm: boolean = false;
   id:number;
-  title: string = "";
-  price: number = 0;
-  stock: number = 0;
-  temp: IProductDetails;
+  ttl: string = "";
+  prc: number = 0;
+  stk: number = 0;
+  product;
   newProduct:IProductDetails;
-  sub;
   index:number=0;
-  productDetails:IProductDetails[];
+  productDetails:IProductDetails[]=[];
   
   ngOnInit() {
-    this.productDetails = this._productListService.productDetails;
-    //  this.sub = this.router.queryParams.subscribe(params => {this.id=params['i']||0;});
-    this.sub = this.router
-    .paramMap
-    .subscribe(params => {
+    this._productListService.getProductsdata().subscribe(data=>this.productDetails=data);
+    this.router.paramMap.subscribe(params => {
       this.id=parseInt(params.get('id'));
     });
+    console.log(this.id);
     if(this.id){
-        this.temp=this.productDetails.find(item => item.product_id == this.id);
-        this.addProductForm.setValue({title:this.temp.title,price:this.temp.price,stock:this.temp.stock});
+      this._productListService.getProductdata(this.id).subscribe((data:{})=>{
+        this.product=data;
+        console.log(this.product);
+      },
+        (err) => console.log(err),
+        () => {
+          this.addProductForm.setValue({title:this.product.title,price:this.product.price,stock:this.product.stock});
+        }
+      );
     }
     else{
       this.addProductForm.setValue({title:'',price:0,stock:0});
@@ -51,22 +55,39 @@ export class AddProductComponent implements OnInit {
     });
 
     onSubmit() {
-      this.title = this.addProductForm.controls['title'].value;
-      this.price = this.addProductForm.controls['price'].value;
-      this.stock = this.addProductForm.controls['stock'].value;
-      if (this.router.snapshot.queryParams['i']){
-        let selecteditem = this.productDetails.find(item => item.product_id === this.temp.product_id);
-        this.index=this.productDetails.indexOf(selecteditem);
-        this.productDetails[this.index]={product_id:this.temp.product_id,title:this.title,price:this.price,stock:this.stock};
+      this.ttl = this.addProductForm.controls['title'].value;
+      this.prc = this.addProductForm.controls['price'].value;
+      this.stk = this.addProductForm.controls['stock'].value;
+      if (this.id){
+        // let selecteditem = this.productDetails.find(item => item.product_id === this.product.product_id);
+        // this.index=this.productDetails.indexOf(selecteditem);
+        this.product={id:this.product.id,title:this.ttl,price:this.prc,stock:this.stk};
+        this._productListService.updateData(this.product).subscribe(data=>{
+          console.log(this.product);
+          //this.route.navigateByUrl('/products/productlist');
+        },
+        (err)=>console.log(err),
+        ()=>{
+        this.addProductForm.reset();
+        this.route.navigateByUrl('/products/productlist');}
+        )
       }
       else{
-        this.index=this.productDetails.length;
-        this.index=this.productDetails[this.index-1].product_id;
-        this.newProduct = {product_id: this.index+1, title: this.title, price: this.price, stock: this.stock}
-        this.productDetails.push(this.newProduct);
+        // this.index=this.productDetails.length;
+        // this.index=this.productDetails[this.index-1].product_id;
+        // this.newProduct = {product_id: this.index+1, title: this.ttl, price: this.prc, stock: this.stk}
+        // this.productDetails.push(this.newProduct);
+
+        this.product={title:this.ttl,price:this.prc,stock:this.stk};
+        this._productListService.createProductdata(this.product).subscribe(data=>{
+          console.log(this.product);
+        },
+        (err)=>console.log(err),
+        ()=>{
+        this.addProductForm.reset();
+        this.route.navigateByUrl('/products/productlist');}
+        )
       }
-      this.addProductForm.reset();
-      this.route.navigateByUrl('/products/productlist');
     }
   
     onReset() {

@@ -25,7 +25,7 @@
 
     <!-- <ng-container *ngIf="idsearch; else elseTemplate1"> -->
         <tr *ngFor="let products of productDetails" >
-            <td>{{products.product_id}}</td>
+            <td>{{products.id}}</td>
             <td>{{products.title}}</td>
             <td>{{products.price}}</td>
             <td>{{products.stock}}</td>
@@ -33,9 +33,9 @@
                 <app-stock-update [stock]=products.stock [productDetail]="products" [component]="'productcomponent'" (updateStock)="updateProductStock();"></app-stock-update>
             </td> 
             <td>{{products.price*products.stock}}</td>
-            <td><nav><button (click)="editproductRoute(products.product_id)" class="btn btn-primary">Edit</button></nav></td>
-            <td><nav><button (click)="deleteRoute(products.product_id)" class="btn btn-secondary" >Delete</button></nav></td>
-            <td><nav><button (click)="addToCart(products.product_id)" class="btn btn-info" >Add To Cart</button></nav></td>
+            <td><nav><button (click)="editproductRoute(products.id)" class="btn btn-primary">Edit</button></nav></td>
+            <td><nav><button (click)="deleteRoute(products.id)" class="btn btn-secondary" >Delete</button></nav></td>
+            <td><nav><button (click)="addToCart(products.id)" class="btn btn-info" >Add To Cart</button></nav></td>
         </tr>    
     <!-- </ng-container>
 

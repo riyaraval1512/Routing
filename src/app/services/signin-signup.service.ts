@@ -10,6 +10,6 @@ export class SigninSignupService{
         {Name:'admin',Password:'admin',Email:'admin@admin'}
       ];
       getData(){
-          return this.userData;
+        return this.userData;
       }
 }

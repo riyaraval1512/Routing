@@ -44,6 +44,9 @@ export class SignupFormComponent implements OnInit {
     console.log(this._signinSignupService.userData);
     this.route.navigateByUrl('/signinsignup/signin');
     }
+    else{
+      this.err_msg="mismatch";
+    }
   }
   onKey(event){
     if(event.target.value==this.Password.value){

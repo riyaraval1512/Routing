@@ -2,7 +2,7 @@
     <h1>Nothing in Cart</h1>
 </ng-container>
 <ng-template #elseTemplate>
-    <table id="Product" class="table">
+    <table id="Product" class="table table-dark table-stripped">
         <thead>
             <th>ID</th>
             <th>TITLE</th>
@@ -13,7 +13,7 @@
             <th>Delete</th>
         </thead>
         <tr *ngFor="let cart of cartProductArray" >
-            <td>{{cart.product_id}}</td>
+            <td>{{cart.id}}</td>
             <td>{{cart.title}}</td>
             <td>{{cart.price}}</td>
             <td>{{cart.stock}}</td>
@@ -22,7 +22,7 @@
             </td>
             
             <td>{{cart.price*cart.quantity}}</td>
-            <td><button (click)="deleteFromCart(cart.product_id)" >Delete from Cart</button></td>
+            <td><button (click)="deleteFromCart(cart.id)" class="btn btn-danger">Delete from Cart</button></td>
         </tr>
     </table>
 </ng-template>
